@@ -13,3 +13,7 @@ def dump(data, n=16, base=0):
         text = data[i : i + 16].translate(ASCII).decode()
         res.write(f'{base + i:016x} | {left} | {right} | {text}\n')
     return res.getvalue()
+
+
+def memprint(data, n=16, base=0, file=None):
+    print(dump(data, n, base), file=file)
