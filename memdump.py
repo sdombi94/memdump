@@ -4,6 +4,7 @@ ASCII = b'.' * 32 + bytes(range(32, 127)) + b'.' * 129
 
 
 def dump(data, n=16, base=0):
+    data = bytes(data)
     res = io.StringIO()
     for i in range(0, len(data), n):
         row = data[i : i + n].hex() + '  ' * n
