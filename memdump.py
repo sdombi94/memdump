@@ -17,3 +17,23 @@ def dump(data, n=16, base=0):
 
 def memprint(data, n=16, base=0, file=None):
     print(dump(data, n, base), file=file)
+
+
+if __name__ == '__main__':
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser('memdump')
+    parser.add_argument('--address', type=lambda x: int(x, 0), default=0)
+    parser.add_argument('--offset', type=lambda x: int(x, 0), default=0)
+    parser.add_argument('--size', type=lambda x: int(x, 0), default=None)
+    parser.add_argument('filename')
+    args = parser.parse_args()
+
+    fd = sys.stdin.buffer if args.filename == '-' else open(args.filename, 'rb')
+
+    with fd:
+        if args.offset:
+            fd.seek(args.offset)
+        data = fd.read(args.size)
+        memprint(data, base=args.address)
